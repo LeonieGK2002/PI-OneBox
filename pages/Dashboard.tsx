@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context';
 import ScratchCard from '../components/ScratchCard';
-import { Truck, Award } from 'lucide-react';
+import { Truck, Award, Package, Clock, Settings } from 'lucide-react';
 import Button from '../components/Button';
 
 const Dashboard: React.FC = () => {
@@ -20,106 +20,150 @@ const Dashboard: React.FC = () => {
   }
 
   const handleGameComplete = () => {
-    // In a real app, this would make an API call to save the win
     setTimeout(() => {
         setPrizeWon("20% OFF NEXT BOX");
     }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen bg-stone-50 py-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Welcome Banner */}
-        <div className="bg-white rounded-2xl shadow-sm p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <h1 className="text-3xl font-bold text-stone-900">{t.dashboard.welcome}, {user.name}</h1>
-                <p className="text-stone-500 mt-1">Suscripción Activa: <span className="text-brand-600 font-semibold">Green Standard</span></p>
+        {/* Modern Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+             <div>
+                <h1 className="text-4xl font-display font-bold text-stone-900">{t.dashboard.welcome}, {user.name.split(' ')[0]}</h1>
+                <p className="text-stone-500 mt-2 text-lg">Aquí tienes el resumen de tu suscripción <span className="text-brand-600 font-semibold bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">Green Standard</span></p>
             </div>
             <div className="flex gap-4">
-                <div className="text-center px-6 py-3 bg-stone-50 rounded-xl">
-                    <p className="text-xs text-stone-400 uppercase tracking-wider font-semibold">Puntos</p>
-                    <p className="text-2xl font-bold text-brand-700">{user.points}</p>
-                </div>
+                <Button variant="outline" size="sm" className="gap-2">
+                    <Settings size={16} /> Configuración
+                </Button>
             </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-            {/* Tracking Card */}
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-                <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                        <Truck size={24} />
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">Puntos OneBox</p>
+                <p className="text-3xl font-display font-bold text-brand-700">{user.points}</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">Cajas Recibidas</p>
+                <p className="text-3xl font-display font-bold text-stone-900">12</p>
+            </div>
+             <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">Próximo Cobro</p>
+                <p className="text-3xl font-display font-bold text-stone-900">25 Feb</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+                <p className="text-stone-400 text-xs font-bold uppercase tracking-wider mb-2">Impacto</p>
+                <p className="text-3xl font-display font-bold text-stone-900">14kg <span className="text-sm font-sans font-normal text-stone-400">CO2 ahorrado</span></p>
+            </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+            {/* Tracking Card - Takes up 2 cols */}
+            <div className="lg:col-span-2 bg-white rounded-3xl shadow-lg border border-stone-100 overflow-hidden">
+                <div className="p-8 border-b border-stone-50">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-brand-50 text-brand-700 p-3 rounded-xl">
+                            <Truck size={24} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-stone-900">{t.dashboard.nextBox}</h2>
+                            <p className="text-stone-400 text-sm">ID: #SP-293812</p>
+                        </div>
                     </div>
-                    <h2 className="text-xl font-bold text-stone-900">{t.dashboard.nextBox}</h2>
                 </div>
                 
-                <div className="relative pt-6 pb-2">
-                     <div className="flex justify-between mb-2 text-sm font-medium text-stone-500">
-                        <span>Preparación</span>
-                        <span className="text-brand-600">En Camino</span>
-                        <span>Entregado</span>
+                <div className="p-8">
+                     <div className="relative">
+                         <div className="absolute top-1/2 left-0 right-0 h-1 bg-stone-100 -translate-y-1/2 rounded-full"></div>
+                         <div className="absolute top-1/2 left-0 w-2/3 h-1 bg-brand-500 -translate-y-1/2 rounded-full"></div>
+                         
+                         <div className="relative flex justify-between">
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-brand-500 border-4 border-white shadow-md flex items-center justify-center text-white">
+                                    <Check size={14} strokeWidth={4} />
+                                </div>
+                                <span className="text-xs font-bold text-brand-700 uppercase">Preparado</span>
+                            </div>
+                             <div className="flex flex-col items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-brand-500 border-4 border-white shadow-md flex items-center justify-center text-white animate-pulse">
+                                    <Clock size={14} strokeWidth={3} />
+                                </div>
+                                <span className="text-xs font-bold text-brand-700 uppercase">En Camino</span>
+                            </div>
+                             <div className="flex flex-col items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-stone-200 border-4 border-white flex items-center justify-center text-stone-400">
+                                    <Package size={14} />
+                                </div>
+                                <span className="text-xs font-bold text-stone-400 uppercase">Entregado</span>
+                            </div>
+                         </div>
                      </div>
-                     <div className="h-3 bg-stone-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-brand-500 w-2/3 rounded-full relative">
-                            <div className="absolute right-0 top-0 bottom-0 w-3 bg-white/30 animate-pulse"></div>
+                     
+                     <div className="mt-8 bg-stone-50 rounded-xl p-4 flex items-center gap-4">
+                        <img src="https://images.unsplash.com/photo-1543501068-1e4284561b36?w=100&h=100&fit=crop" className="w-16 h-16 rounded-lg object-cover" alt="Box" />
+                        <div>
+                            <p className="text-sm font-medium text-stone-900">Llegada estimada: <span className="font-bold">28 Febrero</span></p>
+                            <p className="text-xs text-stone-500">GLS Tracking: 1Z999AA1012301</p>
                         </div>
                      </div>
-                     <p className="mt-4 text-center text-stone-600 bg-stone-50 py-2 rounded-lg text-sm">
-                        Llegada estimada: <span className="font-bold text-stone-900">28 Feb</span>
-                     </p>
                 </div>
             </div>
 
             {/* Game Card */}
-            <div className="bg-gradient-to-br from-stone-900 to-stone-800 rounded-2xl shadow-xl p-6 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-brand-500 rounded-full blur-3xl opacity-20"></div>
+            <div className="lg:col-span-1 bg-gradient-to-br from-stone-900 to-stone-800 rounded-3xl shadow-xl p-8 text-white relative overflow-hidden flex flex-col justify-center min-h-[400px]">
+                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-500 rounded-full blur-[60px] opacity-30"></div>
+                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-purple-500 rounded-full blur-[60px] opacity-20"></div>
                 
-                <div className="flex items-center space-x-3 mb-4">
-                     <div className="p-2 bg-white/10 rounded-lg text-yellow-400">
-                        <Award size={24} />
+                <div className="relative z-10 text-center">
+                     <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-yellow-400 mx-auto mb-6 backdrop-blur-md">
+                        <Award size={32} />
                     </div>
-                    <h2 className="text-xl font-bold">{t.dashboard.scratchTitle}</h2>
-                </div>
-
-                {!showGame && !prizeWon ? (
-                    <div className="text-center py-6">
-                        <p className="text-stone-300 mb-6">{t.dashboard.scratchDesc}</p>
-                        <Button 
-                            onClick={() => setShowGame(true)} 
-                            className="bg-brand-500 hover:bg-brand-400 text-white border-none w-full"
-                        >
-                            {t.dashboard.playGame}
-                        </Button>
-                    </div>
-                ) : prizeWon ? (
-                     <div className="text-center py-6 animate-in zoom-in">
-                        <p className="text-2xl font-bold text-brand-400 mb-2">{t.dashboard.won}</p>
-                        <div className="text-4xl font-black text-white mb-4 tracking-wider border-2 border-dashed border-white/20 p-4 rounded-xl bg-white/5">
-                            {prizeWon}
+                    <h2 className="text-2xl font-bold font-display mb-2">{t.dashboard.scratchTitle}</h2>
+                    
+                    {!showGame && !prizeWon ? (
+                        <>
+                            <p className="text-stone-300 mb-8 text-sm leading-relaxed">{t.dashboard.scratchDesc}</p>
+                            <Button 
+                                onClick={() => setShowGame(true)} 
+                                className="bg-brand-500 hover:bg-brand-400 text-white border-none w-full shadow-lg shadow-brand-500/30"
+                            >
+                                {t.dashboard.playGame}
+                            </Button>
+                        </>
+                    ) : prizeWon ? (
+                        <div className="animate-fade-in py-4">
+                            <p className="text-brand-300 font-bold mb-2 uppercase tracking-widest text-sm">{t.dashboard.won}</p>
+                            <div className="text-3xl font-black text-white mb-6 p-4 border border-dashed border-white/20 rounded-xl bg-white/5">
+                                {prizeWon}
+                            </div>
+                            <Button onClick={() => setPrizeWon(null)} variant="outline" className="border-white/20 text-white hover:bg-white/10 w-full">
+                                Guardar en Wallet
+                            </Button>
                         </div>
-                        <p className="text-sm text-stone-400">Aplicado automáticamente a tu próxima caja.</p>
-                    </div>
-                ) : (
-                    <div className="py-2">
-                        <ScratchCard prize="20% OFF" lang={lang} onComplete={handleGameComplete} />
-                    </div>
-                )}
+                    ) : (
+                        <div className="py-2">
+                            <ScratchCard prize="20% OFF" lang={lang} onComplete={handleGameComplete} />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
 
-        {/* History Grid */}
+        {/* Visual History */}
         <div>
-             <h3 className="text-lg font-bold text-stone-900 mb-4">Historial de Cajas</h3>
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             <h3 className="text-xl font-bold text-stone-900 mb-6">Tu Colección</h3>
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="group relative rounded-xl overflow-hidden aspect-square">
-                        <img src={`https://picsum.photos/300/300?random=${i+20}`} alt="Past box" className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-white font-medium text-sm">Ver detalles</span>
-                        </div>
-                        <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-stone-800">
-                            Enero 2024
+                    <div key={i} className="group relative rounded-2xl overflow-hidden aspect-square cursor-pointer">
+                        <img src={`https://images.unsplash.com/photo-${i === 1 ? '1550009158-9ebf69173e03' : i === 2 ? '1596461404969-9ae70f2830c1' : i===3 ? '1606787366850-de6330128bfc' : '1583847268964-b28dc8f51f92'}?w=400&h=400&fit=crop`} alt="Past box" className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 grayscale hover:grayscale-0" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+                            <span className="text-white font-bold">Caja #{100+i}</span>
+                            <span className="text-stone-300 text-xs">Entregado</span>
                         </div>
                     </div>
                 ))}
@@ -131,3 +175,22 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+// Check component definition
+function Check({ size, strokeWidth, ...props }: any) {
+    return (
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width={size} 
+        height={size} 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth={strokeWidth || 2} 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        {...props}
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    )
+}
